@@ -18,5 +18,12 @@ export default defineConfig({
     watch: {
       usePolling: true,
     },
+    proxy: {
+      '/auth': {
+        target: 'http://nginx',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
   },
 });
