@@ -1,38 +1,58 @@
-# front
+# Vue.js 2FA Frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+This is the frontend client for the CodeIgniter 4 Two-Factor Authentication (2FA) example. It is built with **Vue 3** and **Vite**.
 
-## Recommended IDE Setup
+## Overview
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+This application demonstrates a secure authentication flow:
+1.  **Login**: User authenticates with email and password.
+2.  **Check 2FA Status**: The app automatically checks if 2FA is required.
+3.  **Setup Flow**: If 2FA is not enabled (or not initialized), the user is forced into a setup wizard to scan a QR code.
+4.  **Verification**: Users must enter a valid Time-based One-Time Password (TOTP) from their authenticator app (Google Authenticator, Authy, etc.) to complete login.
 
-## Recommended Browser Setup
+## Running with Docker (Recommended)
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd) 
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+This project is integrated into the main `docker-compose.yml`. It runs automatically alongside the backend.
 
-## Customize configuration
+### Start the Application
+To start the entire stack (Frontend + Backend + Database):
 
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-yarn
+```bash
+docker-compose up -d
 ```
 
-### Compile and Hot-Reload for Development
+### Access
 
-```sh
-yarn dev
-```
+*   **Frontend**: [http://localhost:5173](http://localhost:5173)
+*   **Backend API**: [http://localhost:8080](http://localhost:8080)
 
-### Compile and Minify for Production
+The frontend is configured to proxy API requests (`/auth/...`) to the backend via the internal Docker network, resolving CORS issues automatically.
 
-```sh
-yarn build
-```
+## Local Development (Without Docker)
+
+If you prefer to run the frontend outside of Docker:
+
+1.  **Install Dependencies**
+    ```bash
+    npm install
+    ```
+
+2.  **Start Dev Server**
+    ```bash
+    npm run dev
+    ```
+
+*Note: You may need to adjust `vite.config.js` proxy target if your backend is running on a different port than the Docker setup.*
+
+## Project Structure
+
+*   **`src/App.vue`**: Main application logic handling the state machine for Login -> Setup -> Verify.
+*   **`src/services/api.js`**: Axios instance configured for API communication.
+*   **`vite.config.js`**: Vite configuration including the API proxy setup.
+
+## Technologies
+
+*   Vue.js 3 (Composition API)
+*   Vite
+*   Axios
+*   CSS3 (Scoped Styles)
