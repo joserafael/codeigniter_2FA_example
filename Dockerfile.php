@@ -5,9 +5,10 @@ FROM php:8.3-fpm-alpine
 WORKDIR /var/www/html
 
 # Install system dependencies
+# Install system dependencies
 # build-base is for compiling extensions, mysql-client for pdo_mysql and mysql CLI
 # icu-dev for intl, libzip-dev for zip, libpng-dev/libjpeg-turbo-dev/freetype-dev for gd
-# oniguruma-dev for mbstring, hiredis-dev for redis PECL extension
+# oniguruma-dev for mbstring, hiredis-dev for redis PECL extension, sqlite-dev for sqlite3
 RUN apk update && apk add --no-cache \
     build-base \
     mysql-client \
@@ -20,13 +21,15 @@ RUN apk update && apk add --no-cache \
     oniguruma-dev \
     git \
     unzip \
-    hiredis-dev
+    hiredis-dev \
+    sqlite-dev
 
 # Install PHP extensions
 # Configure GD with FreeType and JPEG support
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
     pdo_mysql \
+    mysqli \
     zip \
     intl \
     gd \

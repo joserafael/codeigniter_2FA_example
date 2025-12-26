@@ -1,5 +1,3 @@
-
-
 services:
   app:
     build:
@@ -24,16 +22,16 @@ services:
       cache.redis.timeout: 0
       cache.redis.database: 0 # Default Redis database
       # Email (MailHog)
-      email.fromEmail: 'app@example.com'
-      email.fromName: 'codeigniter_project'
+      email.fromEmail: "app@example.com"
+      email.fromName: "codeigniter_project"
       email.SMTPHost: mailhog
       email.SMTPPort: 1025
-      email.SMTPUser: '' # MailHog does not require authentication
-      email.SMTPPass: ''
+      email.SMTPUser: "" # MailHog does not require authentication
+      email.SMTPPass: ""
       email.protocol: smtp
       email.mailType: html
       email.charset: utf-8
-      email.SMTPCrypto: '' # No encryption for MailHog
+      email.SMTPCrypto: "" # No encryption for MailHog
     depends_on:
       - db
       - redis
