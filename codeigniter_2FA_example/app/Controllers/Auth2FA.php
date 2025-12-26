@@ -51,6 +51,7 @@ class Auth2FA extends BaseController
             'user_id' => $user['id'],
             'email' => $user['email'],
             'is_2fa_enabled' => (bool)$user['is_2fa_enabled'],
+            'is_2fa_initialized' => !empty($user['secret_2fa']),
         ];
 
         if ($user['is_2fa_enabled']) {
