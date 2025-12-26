@@ -42,10 +42,10 @@ RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 # Install Redis PECL extension
 # build-base and hiredis-dev are already installed.
 # phpize (used by pecl) needs autoconf. We install it temporarily.
-RUN apk add --no-cache --virtual .build-deps-redis autoconf \
-    && pecl install redis \
-    && docker-php-ext-enable redis \
-    && apk del .build-deps-redis
+RUN apk add --no-cache --virtual .build-deps autoconf \
+    && pecl install redis pcov \
+    && docker-php-ext-enable redis pcov \
+    && apk del .build-deps
 
 # Install Composer globally
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
